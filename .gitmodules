@@ -1,3 +1,0 @@
-[submodule "lib/node-sonos-http-api"]
-	path = lib/node-sonos-http-api
-	url = https://github.com/jishi/node-sonos-http-api.git
