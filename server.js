@@ -6,13 +6,6 @@ var path = require('path');
 var webroot = path.resolve(__dirname, 'static');
 var nodeStatic = require('node-static');
 
-// Sonos
-var SonosDiscovery = require('sonos-discovery');
-var SonosHttpAPI = require('./lib/node-sonos-http-api/lib/sonos-http-api.js');
-
-// Receiver
-var YamahaReceiverAPI = null;
-
 var settings = {
   port: 5005,
   cacheDir: './cache',
@@ -41,8 +34,17 @@ if (userSettings) {
 }
 
 var fileServer = new nodeStatic.Server(webroot);
+
+// Sonos
+var SonosDiscovery = require('sonos-discovery');
 var sonosDiscovery = new SonosDiscovery(settings);
+var SonosHttpAPI = require('./lib/node-sonos-http-api/lib/sonos-http-api.js');
 var sonosAPI = new SonosHttpAPI(sonosDiscovery, settings);
+
+// Receiver
+// var YamahaReceiverAPI = require('./lib/yamaha-nodejs/receiver-http-api.js');
+var YamahaReceiverAPI = require('./lib/node-yamaha-avr/receiver-http-api.js');
+var receiverAPI = new YamahaReceiverAPI(settings);
 
 var server = http.createServer(function (req, res) {
   req.addListener('end', function () {
@@ -56,18 +58,28 @@ var server = http.createServer(function (req, res) {
 
       if (req.url.toLowerCase().indexOf("sonos") > -1) {
         if (req.method === 'GET') {
+          // cleanse the URL of sonos/ for the Sonos API
+          req.url = req.url.toLowerCase().replace('sonos/', '');
+          // Handle with node-sonos-http-api
           sonosAPI.requestHandler(req, res);
         } else {
           console.log("Sonos endpoint only accepts GET requests. This was a " + req.method + " request.");
         }
       } else if (req.url.toLowerCase().indexOf("receiver") > -1) { 
-      	console.log("receiver");
+        if (req.method === 'GET') {
+          // cleanse the URL of receiver/ for the Receiver API
+          req.url = req.url.toLowerCase().replace('receiver/', '');
+          // Handle with receiver-http-api
+          receiverAPI.requestHandler(req, res);
+        } else {
+          console.log("Receiver endpoint only accepts GET requests. This was a " + req.method + " request.");
+        }
       } else {
         console.log("Unknown URL: " + req.url);
       }
-    
+
     });
-  }).resume();
+}).resume();
 });
 
 server.listen(settings.port, function () {
