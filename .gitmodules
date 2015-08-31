@@ -4,9 +4,6 @@
 [submodule "lib/echo-sonos"]
 	path = lib/echo-sonos
 	url = https://github.com/donholly/echo-sonos.git
-[submodule "lib/yamaha-nodejs"]
-	path = lib/yamaha-nodejs
-	url = https://github.com/donholly/yamaha-nodejs.git
 [submodule "lib/node-yamaha-avr"]
 	path = lib/node-yamaha-avr
 	url = https://github.com/donholly/node-yamaha-avr.git
