@@ -42,9 +42,11 @@ var SonosHttpAPI = require('./lib/node-sonos-http-api/lib/sonos-http-api.js');
 var sonosAPI = new SonosHttpAPI(sonosDiscovery, settings);
 
 // Receiver
-// var YamahaReceiverAPI = require('./lib/yamaha-nodejs/receiver-http-api.js');
 var YamahaReceiverAPI = require('./lib/node-yamaha-avr/receiver-http-api.js');
 var receiverAPI = new YamahaReceiverAPI(settings);
+
+// Spotify
+var Mopidy = require('mopidy');
 
 var server = http.createServer(function (req, res) {
   req.addListener('end', function () {
@@ -74,6 +76,38 @@ var server = http.createServer(function (req, res) {
         } else {
           console.log("Receiver endpoint only accepts GET requests. This was a " + req.method + " request.");
         }
+      } else if (req.url.toLowerCase().indexOf("spotify") > -1) { 
+
+        var trackDesc = function (track) {
+          return track.name + " by " + track.artists[0].name + " from " + track.album.name;
+        };
+
+        var queueAndPlay = function (playlistNum, trackNum) {
+            playlistNum = playlistNum || 0;
+            trackNum = trackNum || 0;
+            mopidy.playlists.getPlaylists().then(function (playlists) {
+                var playlist = playlists[playlistNum];
+                console.log("Loading playlist:", playlist.name);
+                return mopidy.tracklist.add(playlist.tracks).then(function (tlTracks) {
+                    return mopidy.playback.play(tlTracks[trackNum]).then(function () {
+                        return mopidy.playback.getCurrentTrack().then(function (track) {
+                            console.log("Now playing:", trackDesc(track));
+                            res.end();
+                        });
+                    });
+                });
+            })
+            .catch(console.error.bind(console)) // Handle errors here
+            .done();                            // ...or they'll be thrown here
+            res.end();
+        };
+
+        var mopidy = new Mopidy({
+          webSocketUrl: "ws://192.168.1.230:6680/mopidy/ws/"
+        });
+        mopidy.on(console.log.bind(console));  // Log all events
+        mopidy.on("state:online", queueAndPlay);
+
       } else {
         console.log("Unknown URL: " + req.url);
       }
