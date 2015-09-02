@@ -69,15 +69,10 @@ var server = http.createServer(function (req, res) {
         }
       } else if (req.url.toLowerCase().indexOf("receiver") > -1) { 
         if (req.method === 'GET') {
-          // cleanse the URL of receiver/ for the Receiver API
-          req.url = req.url.toLowerCase().replace('receiver/', '');
-          // Handle with receiver-http-api
-          receiverAPI.requestHandler(req, res);
-        } else {
-          console.log("Receiver endpoint only accepts GET requests. This was a " + req.method + " request.");
-        }
-      } else if (req.url.toLowerCase().indexOf("spotify") > -1) { 
 
+
+        // clean / move this
+        if (req.url.toLowerCase().indexOf("spotify") > -1) { 
         var trackDesc = function (track) {
           return track.name + " by " + track.artists[0].name + " from " + track.album.name;
         };
@@ -107,7 +102,25 @@ var server = http.createServer(function (req, res) {
         });
         mopidy.on(console.log.bind(console));  // Log all events
         mopidy.on("state:online", queueAndPlay);
+      } else {
 
+
+
+
+
+
+          // cleanse the URL of receiver/ for the Receiver API
+          req.url = req.url.toLowerCase().replace('receiver/', '');
+          // Handle with receiver-http-api
+          receiverAPI.requestHandler(req, res);
+
+
+}
+
+
+        } else {
+          console.log("Receiver endpoint only accepts GET requests. This was a " + req.method + " request.");
+        }
       } else {
         console.log("Unknown URL: " + req.url);
       }
