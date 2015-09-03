@@ -69,55 +69,10 @@ var server = http.createServer(function (req, res) {
         }
       } else if (req.url.toLowerCase().indexOf("receiver") > -1) { 
         if (req.method === 'GET') {
-
-
-        // clean / move this
-        if (req.url.toLowerCase().indexOf("spotify") > -1) { 
-        var trackDesc = function (track) {
-          return track.name + " by " + track.artists[0].name + " from " + track.album.name;
-        };
-
-        var queueAndPlay = function (playlistNum, trackNum) {
-            playlistNum = playlistNum || 0;
-            trackNum = trackNum || 0;
-            mopidy.playlists.getPlaylists().then(function (playlists) {
-                var playlist = playlists[playlistNum];
-                console.log("Loading playlist:", playlist.name);
-                return mopidy.tracklist.add(playlist.tracks).then(function (tlTracks) {
-                    return mopidy.playback.play(tlTracks[trackNum]).then(function () {
-                        return mopidy.playback.getCurrentTrack().then(function (track) {
-                            console.log("Now playing:", trackDesc(track));
-                            res.end();
-                        });
-                    });
-                });
-            })
-            .catch(console.error.bind(console)) // Handle errors here
-            .done();                            // ...or they'll be thrown here
-            res.end();
-        };
-
-        var mopidy = new Mopidy({
-          webSocketUrl: "ws://192.168.1.230:6680/mopidy/ws/"
-        });
-        mopidy.on(console.log.bind(console));  // Log all events
-        mopidy.on("state:online", queueAndPlay);
-      } else {
-
-
-
-
-
-
           // cleanse the URL of receiver/ for the Receiver API
           req.url = req.url.toLowerCase().replace('receiver/', '');
           // Handle with receiver-http-api
           receiverAPI.requestHandler(req, res);
-
-
-}
-
-
         } else {
           console.log("Receiver endpoint only accepts GET requests. This was a " + req.method + " request.");
         }
