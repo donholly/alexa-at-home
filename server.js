@@ -83,7 +83,7 @@ var server = http.createServer(function (req, res) {
         if (req.method === 'GET') {
           // TODO use options for the input here
           receiverAPI.selectInput("HDMI4", null);
-          //receiverAPI.setVolume(-300, null);
+          receiverAPI.setVolume(-300, null);
 
           // cleanse the URL of spotify/ for the Mopidy API
           req.url = req.url.toLowerCase().replace('/spotify/', '');
