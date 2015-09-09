@@ -45,6 +45,10 @@ var sonosAPI = new SonosHttpAPI(sonosDiscovery, settings);
 var YamahaReceiverAPI = require('./lib/node-yamaha-avr/receiver-http-api.js');
 var receiverAPI = new YamahaReceiverAPI(settings);
 
+// Mopidy (Spotify)
+var MopidyAPI = require('./lib/mopidy-spotify/mopidy-http-api.js');
+var modpidyAPI = new MopidyAPI(settings);
+
 var server = http.createServer(function (req, res) {
   req.addListener('end', function () {
     fileServer.serve(req, res, function (err) {
@@ -73,6 +77,21 @@ var server = http.createServer(function (req, res) {
         } else {
           console.log("Receiver endpoint only accepts GET requests. This was a " + req.method + " request.");
         }
+      } else if (req.url.toLowerCase().indexOf("spotify") > -1) {
+
+        if (req.method === 'GET') {
+          // TODO use options for the input here
+          receiverAPI.selectInput("HDMI4", null);
+          receiverAPI.setVolume(-300, null);
+
+          // cleanse the URL of spotify/ for the Mopidy API
+          req.url = req.url.toLowerCase().replace('spotify/', '');
+
+          modpidyAPI.requestHandler(req, res);
+        } else {
+          console.log("Spotify endpoint only accepts GET requests. This was a " + req.method + " request.");
+        }
+
       } else {
         console.log("Unknown URL: " + req.url);
       }
