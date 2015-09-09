@@ -62,7 +62,7 @@ var server = http.createServer(function (req, res) {
       if (req.url.toLowerCase().indexOf("sonos") > -1) {
         if (req.method === 'GET') {
           // cleanse the URL of sonos/ for the Sonos API
-          req.url = req.url.toLowerCase().replace('sonos/', '');
+          req.url = req.url.toLowerCase().replace('/sonos/', '');
           // Handle with node-sonos-http-api
           sonosAPI.requestHandler(req, res);
         } else {
@@ -71,7 +71,8 @@ var server = http.createServer(function (req, res) {
       } else if (req.url.toLowerCase().indexOf("receiver") > -1) { 
         if (req.method === 'GET') {
           // cleanse the URL of receiver/ for the Receiver API
-          req.url = req.url.toLowerCase().replace('receiver/', '');
+          req.url = req.url.toLowerCase().replace('/receiver/', '');
+
           // Handle with receiver-http-api
           receiverAPI.requestHandler(req, res);
         } else {
@@ -82,10 +83,10 @@ var server = http.createServer(function (req, res) {
         if (req.method === 'GET') {
           // TODO use options for the input here
           receiverAPI.selectInput("HDMI4", null);
-          receiverAPI.setVolume(-300, null);
+          //receiverAPI.setVolume(-300, null);
 
           // cleanse the URL of spotify/ for the Mopidy API
-          req.url = req.url.toLowerCase().replace('spotify/', '');
+          req.url = req.url.toLowerCase().replace('/spotify/', '');
 
           modpidyAPI.requestHandler(req, res);
         } else {
