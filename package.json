@@ -22,8 +22,10 @@
     "sonos-http-api": "file:lib/node-sonos-http-api",
     
     "yamaha-nodejs": "file:lib/yamaha-nodejs",
-    "node-yamaha-avr": "file:lib/node-yamaha-avr"
-  },
+    "node-yamaha-avr": "file:lib/node-yamaha-avr",
+	
+    "mopidy": "latest"  
+},
   "engine": "node 0.10.x",
   "main": "lib/node-sonos-http-api.js"
 }
