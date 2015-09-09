@@ -45,9 +45,6 @@ var sonosAPI = new SonosHttpAPI(sonosDiscovery, settings);
 var YamahaReceiverAPI = require('./lib/node-yamaha-avr/receiver-http-api.js');
 var receiverAPI = new YamahaReceiverAPI(settings);
 
-// Spotify
-var Mopidy = require('mopidy');
-
 var server = http.createServer(function (req, res) {
   req.addListener('end', function () {
     fileServer.serve(req, res, function (err) {
