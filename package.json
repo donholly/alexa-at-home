@@ -11,12 +11,14 @@
     
     "async": "0.2.x",
     "deferred": "latest",
+    "fuzzy": "latest",
     "node-static": "0.7.x",
     "q": "latest",
     "request": "latest",
     "require-fu": "1.0.x",
     "string-format": "latest",
     "xml2js": "latest",
+    "underscore-node": "latest",
 
     "sonos-discovery": "https://github.com/jishi/node-sonos-discovery/archive/0.15.3.tar.gz",
     "sonos-http-api": "file:lib/node-sonos-http-api",
@@ -24,7 +26,7 @@
     "yamaha-nodejs": "file:lib/yamaha-nodejs",
     "node-yamaha-avr": "file:lib/node-yamaha-avr",
 	
-    "mopidy": "latest"  
+    "mopidy": "latest"
 },
   "engine": "node 0.10.x",
   "main": "lib/node-sonos-http-api.js"
