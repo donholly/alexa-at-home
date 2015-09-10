@@ -8,7 +8,7 @@ var nodeStatic = require('node-static');
 
 var winston = require('winston');
 winston.add(winston.transports.File, {
-  filename: 'log.log',
+  filename: __dirname + '/log.log',
   handleExceptions: true,
   formatter: function(options) {
     // Return string will be passed to logger.
