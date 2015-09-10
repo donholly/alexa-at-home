@@ -6,6 +6,19 @@ var path = require('path');
 var webroot = path.resolve(__dirname, 'static');
 var nodeStatic = require('node-static');
 
+var winston = require('winston');
+winston.add(winston.transports.File, {
+  filename: 'log.log',
+  handleExceptions: true,
+  formatter: function(options) {
+    // Return string will be passed to logger.
+    var now = new Date();
+    return now.toISOString() +' '+ options.level.toUpperCase() +' '+ (undefined !== options.message ? options.message : '') +
+    (options.meta && Object.keys(options.meta).length ? '\n\t'+ JSON.stringify(options.meta) : '' );
+  },
+  json: false
+});
+
 var settings = {
   port: 5005,
   cacheDir: './cache',
@@ -24,7 +37,7 @@ if (!fs.existsSync(webroot + '/tts/')) {
 try {
   var userSettings = require(path.resolve(__dirname, 'settings.json'));
 } catch (e) {
-  console.log('No settings file found, will only use default settings');
+  winston.info('No settings file found, will only use default settings');
 }
 
 if (userSettings) {
@@ -57,7 +70,12 @@ var server = http.createServer(function (req, res) {
         return;
       }
 
-      console.log("Serving: " + req.url);
+      if (req.url.indexOf('/favicon.ico') > -1) {
+        res.end();
+        return;
+      }
+
+      winston.info("Serving: " + req.url);
 
       if (req.url.toLowerCase().indexOf("sonos") > -1) {
         if (req.method === 'GET') {
@@ -66,7 +84,7 @@ var server = http.createServer(function (req, res) {
           // Handle with node-sonos-http-api
           sonosAPI.requestHandler(req, res);
         } else {
-          console.log("Sonos endpoint only accepts GET requests. This was a " + req.method + " request.");
+          winston.info("Sonos endpoint only accepts GET requests. This was a " + req.method + " request.");
         }
       } else if (req.url.toLowerCase().indexOf("receiver") > -1) { 
         if (req.method === 'GET') {
@@ -76,7 +94,7 @@ var server = http.createServer(function (req, res) {
           // Handle with receiver-http-api
           receiverAPI.requestHandler(req, res);
         } else {
-          console.log("Receiver endpoint only accepts GET requests. This was a " + req.method + " request.");
+          winston.info("Receiver endpoint only accepts GET requests. This was a " + req.method + " request.");
         }
       } else if (req.url.toLowerCase().indexOf("spotify") > -1) {
 
@@ -90,11 +108,11 @@ var server = http.createServer(function (req, res) {
 
           modpidyAPI.requestHandler(req, res);
         } else {
-          console.log("Spotify endpoint only accepts GET requests. This was a " + req.method + " request.");
+          winston.info("Spotify endpoint only accepts GET requests. This was a " + req.method + " request.");
         }
 
       } else {
-        console.log("Unknown URL: " + req.url);
+        winston.info("Unknown URL: " + req.url);
       }
 
     });
@@ -102,5 +120,5 @@ var server = http.createServer(function (req, res) {
 });
 
 server.listen(settings.port, function () {
-  console.log('Alexa@Home HTTP server listening on port', settings.port);
+  winston.info('Alexa@Home HTTP server listening on port', settings.port);
 });
