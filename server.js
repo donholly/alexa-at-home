@@ -100,6 +100,7 @@ var server = http.createServer(function (req, res) {
 
         if (req.method === 'GET') {
           // TODO use options for the input here
+          receiverAPI.setPowerState(true, null);
           receiverAPI.selectInput("HDMI4", null);
           receiverAPI.setVolume(-300, null);
 
