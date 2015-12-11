@@ -8,7 +8,7 @@
     "url": "https://github.com/donholly/alexa-at-home.git"
   },
   "dependencies": {
-    
+
     "async": "0.2.x",
     "deferred": "latest",
     "fuzzy": "latest",
@@ -19,13 +19,12 @@
     "string-format": "latest",
     "xml2js": "latest",
     "underscore-node": "latest",
-
-    "sonos-discovery": "https://github.com/jishi/node-sonos-discovery/archive/0.15.3.tar.gz",
-    "sonos-http-api": "file:lib/node-sonos-http-api",
     
+    "sonos-http-api": "file:lib/node-sonos-http-api",
+
     "yamaha-nodejs": "file:lib/yamaha-nodejs",
     "node-yamaha-avr": "file:lib/node-yamaha-avr",
-	
+
     "mopidy": "latest"
 },
   "engine": "node 0.10.x",

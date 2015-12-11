@@ -52,7 +52,7 @@ var fileServer = new nodeStatic.Server(webroot);
 var SonosDiscovery = require('sonos-discovery');
 var sonosDiscovery = new SonosDiscovery(settings);
 var SonosHttpAPI = require('./lib/node-sonos-http-api/lib/sonos-http-api.js');
-var sonosAPI = new SonosHttpAPI(sonosDiscovery, settings);
+// var sonosAPI = new SonosHttpAPI(sonosDiscovery, settings);
 
 // Receiver
 var YamahaReceiverAPI = require('./lib/node-yamaha-avr/receiver-http-api.js');
@@ -86,7 +86,7 @@ var server = http.createServer(function (req, res) {
         } else {
           winston.info("Sonos endpoint only accepts GET requests. This was a " + req.method + " request.");
         }
-      } else if (req.url.toLowerCase().indexOf("receiver") > -1) { 
+      } else if (req.url.toLowerCase().indexOf("receiver") > -1) {
         if (req.method === 'GET') {
           // cleanse the URL of receiver/ for the Receiver API
           req.url = req.url.toLowerCase().replace('/receiver/', '');
@@ -101,7 +101,7 @@ var server = http.createServer(function (req, res) {
         if (req.method === 'GET') {
           // TODO use options for the input here
           receiverAPI.setPowerState(true, null);
-          receiverAPI.selectInput("HDMI4", null);
+          receiverAPI.selectInput("HDMI2", null);
           receiverAPI.setVolume(-300, null);
 
           // cleanse the URL of spotify/ for the Mopidy API
