@@ -19,10 +19,9 @@
     "string-format": "latest",
     "xml2js": "latest",
     "underscore-node": "latest",
-    
+
     "sonos-http-api": "file:lib/node-sonos-http-api",
 
-    "yamaha-nodejs": "file:lib/yamaha-nodejs",
     "node-yamaha-avr": "file:lib/node-yamaha-avr",
 
     "mopidy": "latest"
