@@ -52,7 +52,7 @@ var fileServer = new nodeStatic.Server(webroot);
 var SonosDiscovery = require('sonos-discovery');
 var sonosDiscovery = new SonosDiscovery(settings);
 var SonosHttpAPI = require('./lib/node-sonos-http-api/lib/sonos-http-api.js');
-// var sonosAPI = new SonosHttpAPI(sonosDiscovery, settings);
+var sonosAPI = new SonosHttpAPI(sonosDiscovery, settings);
 
 // Receiver
 var YamahaReceiverAPI = require('./lib/node-yamaha-avr/receiver-http-api.js');

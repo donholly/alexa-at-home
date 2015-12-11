@@ -1,0 +1,42 @@
+{
+   "disclosure": {
+      "players": [
+        { "roomName": "Bathroom", "volume": 60 }
+      ],
+      "state": "PLAYING",
+      "favorite": "Disclosure Radio",
+      "uri": "x-rincon-stream:RINCON_0000000000001500",
+      "playMode": "SHUFFLE",
+      "pauseOthers": true
+    },
+    "chilling": {
+      "players": [
+        { "roomName": "Bathroom", "volume": 60 }
+      ],
+      "state": "PLAYING",
+      "favorite": "Chillin'",
+      "uri": "x-rincon-stream:RINCON_0000000000001500",
+      "playMode": "SHUFFLE",
+      "pauseOthers": true
+    },
+	  "chillin": {
+      "players": [
+        { "roomName": "Bathroom", "volume": 60 }
+      ],
+      "state": "PLAYING",
+      "favorite": "Chillin'",
+      "uri": "x-rincon-stream:RINCON_0000000000001500",
+      "playMode": "SHUFFLE",
+      "pauseOthers": true
+    },
+    "party": {
+      "players": [
+        { "roomName": "Bathroom", "volume": 80 }
+      ],
+      "state": "PLAYING",
+      "favorite": "House Party",
+      "uri": "x-rincon-stream:RINCON_0000000000001500",
+      "playMode": "SHUFFLE",
+      "pauseOthers": true
+    }
+}

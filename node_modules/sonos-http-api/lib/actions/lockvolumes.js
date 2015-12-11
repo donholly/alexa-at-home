@@ -1,7 +1,9 @@
+var winston = require('winston');
+
 var lockVolumes = {};
 
 function lockvolumes(player) {
-  console.log("locking volumes");
+  winston.info("locking volumes");
   // Locate all volumes
   var discovery = player.discovery;
 
@@ -15,13 +17,13 @@ function lockvolumes(player) {
 }
 
 function unlockvolumes(player) {
-  console.log("unlocking volumes");
+  winston.info("unlocking volumes");
   var discovery = player.discovery;
   discovery.removeListener("volume", restrictVolume);
 }
 
 function restrictVolume(info) {
-  console.log("should revert volume to", lockVolumes[info.uuid]);
+  winston.info("should revert volume to", lockVolumes[info.uuid]);
   var player = this.getPlayerByUUID(info.uuid);
   // Only do this if volume differs
   if (player.state.volume != lockVolumes[info.uuid])

@@ -12,7 +12,7 @@
     "async": "0.2.x",
     "deferred": "latest",
     "fuzzy": "latest",
-    "node-static": "0.7.x",
+    "node-static": "latest",
     "q": "latest",
     "request": "latest",
     "require-fu": "1.0.x",

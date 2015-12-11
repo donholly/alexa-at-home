@@ -1,3 +1,5 @@
+var winston = require('winston');
+
 function sleep(player, values) {
   var timestamp = 'ERROR';
   if (/^\d+$/.test(values[0])) {
@@ -9,7 +11,7 @@ function sleep(player, values) {
     // assume a timestamp
     timestamp = values[0];
   }
-  console.log(timestamp)
+  winston.info(timestamp)
   player.coordinator.sleep(timestamp);
 }
 

@@ -1,11 +1,13 @@
+var winston = require('winston');
+
 var pauseState = {};
 
 function pauseAll(player, values) {
-  console.log("pausing all players");
+  winston.info("pausing all players");
   // save state for resume
 
   if (values[0] && values[0] > 0) {
-    console.log("in", values[0], "minutes");
+    winston.info("in", values[0], "minutes");
     setTimeout(function () { doPauseAll(player.discovery); }, values[0]*1000*60);
   } else {
     doPauseAll(player.discovery);
@@ -13,10 +15,10 @@ function pauseAll(player, values) {
 }
 
 function resumeAll(player, values) {
-  console.log("resuming all players");
+  winston.info("resuming all players");
 
     if (values[0] && values[0] > 0) {
-    console.log("in", values[0], "minutes");
+    winston.info("in", values[0], "minutes");
     setTimeout(function () { doResumeAll(player.discovery); }, values[0]*1000*60);
   } else {
     doResumeAll(player.discovery);

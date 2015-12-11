@@ -1,11 +1,13 @@
+var winston = require('winston');
+
 function playlist(player, values) {
   player.getPlaylists(function (success, playlists) {
     playlists.forEach(function (item) {
       if (item.title.toLowerCase() == decodeURIComponent(values[0]).toLowerCase()) {
-        console.log('found playlist', item.title, item.uri);
+        winston.info('found playlist', item.title, item.uri);
         player.coordinator.replaceQueueWithPlaylist(item.uri.toLowerCase(), function (success) {
           if (success) {
-            console.log("replaced queue with playlist "+ item.title + ".");
+            winston.info("replaced queue with playlist "+ item.title + ".");
             player.coordinator.play();
           }
         });

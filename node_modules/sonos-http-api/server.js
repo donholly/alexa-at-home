@@ -7,6 +7,7 @@ var nodeStatic = require('node-static');
 var fs = require('fs');
 var path = require('path');
 var webroot = path.resolve(__dirname, 'static');
+var winston = require('winston');
 
 var settings = {
   port: 5005,
@@ -26,7 +27,7 @@ if (!fs.existsSync(webroot + '/tts/')) {
 try {
   var userSettings = require(path.resolve(__dirname, 'settings.json'));
 } catch (e) {
-  console.log('no settings file found, will only use default settings');
+  winston.info('no settings file found, will only use default settings');
 }
 
 if (userSettings) {
@@ -55,5 +56,5 @@ var server = http.createServer(function (req, res) {
 });
 
 server.listen(settings.port, function () {
-  console.log('http server listening on port', settings.port);
+  winston.info('http server listening on port', settings.port);
 });

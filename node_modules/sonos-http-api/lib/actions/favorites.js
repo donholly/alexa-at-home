@@ -1,9 +1,13 @@
+var winston = require('winston');
+
 function favorites(player, values, callback) {
   callback.invokeIntended = true;
   player.getFavorites(function (success, favorites) {
     // only present relevant data
     var simpleFavorites = [];
-    console.log(favorites)
+    
+    winston.info(favorites)
+
     favorites.forEach(function (i) {
       simpleFavorites.push(i.title);
     });

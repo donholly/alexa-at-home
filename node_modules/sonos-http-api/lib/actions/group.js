@@ -1,7 +1,9 @@
+var winston = require('winston');
+
 function addToGroup(player, values) {
   var joiningPlayer = player.discovery.getPlayer(decodeURIComponent(values[0]));
   if(!joiningPlayer) {
-    console.log("Room " + values[0] + " not found - can't group with " + player.roomName);
+    winston.info("Room " + values[0] + " not found - can't group with " + player.roomName);
     return;
   }
   attachTo(joiningPlayer, player.coordinator);
@@ -10,7 +12,7 @@ function addToGroup(player, values) {
 function joinPlayer(player, values) {
   var receivingPlayer = player.discovery.getPlayer(decodeURIComponent(values[0]));
   if(!receivingPlayer) {
-    console.log("Room " + values[0] + " not found - can't make " + player.roomName + " join it");
+    winston.info("Room " + values[0] + " not found - can't make " + player.roomName + " join it");
     return;
   }
   attachTo(player, receivingPlayer.coordinator);
@@ -19,7 +21,7 @@ function joinPlayer(player, values) {
 function removeFromGroup(player, values) {
   var leavingPlayer = player.discovery.getPlayer(decodeURIComponent(values[0]));
   if(!leavingPlayer) {
-    console.log("Room " + values[0] + " not found - can't remove from group of " + player.roomName);
+    winston.info("Room " + values[0] + " not found - can't remove from group of " + player.roomName);
     return;
   }
   isolate(leavingPlayer);
