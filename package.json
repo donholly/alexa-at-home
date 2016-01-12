@@ -2,7 +2,7 @@
   "name": "Alexa-at-Home",
   "version": "0.0.1",
   "description": "Control everything with Alexa!",
-  "author": "Don Holly <don.holly@gmail.com>",
+  "author": "Don Holly",
   "repository": {
     "type": "git",
     "url": "https://github.com/donholly/alexa-at-home.git"
